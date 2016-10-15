@@ -83,10 +83,10 @@ function config (
 
 function run () {
   var config = {
-    apiKey: '...',
-    authDomain: '....firebaseapp.com',
-    databaseURL: 'https://....firebaseio.com',
-    storageBucket: '....appspot.com'
+    apiKey: 'AIzaSyApu8K6ALu_piGLcSAoP3fuZcPOo0PuT7c',
+    authDomain: 'polltime-5fc07.firebaseapp.com',
+    databaseURL: 'https://polltime-5fc07.firebaseio.com',
+    storageBucket: 'polltime-5fc07.appspot.com'
   }
 
   firebase.initializeApp(config)
