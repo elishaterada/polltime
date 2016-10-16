@@ -114,3 +114,22 @@ md-icon.md-custom-theme.md-48 {
 .md-custom-theme .md-errors-spacer {
   min-height: 0;
 }
+
+/* D3 Graph */
+.graph {
+  position: relative;
+}
+
+.graph svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.graph text {
+  fill: #fff;
+  font-size: 14px;
+}
+
+.graph rect.potential {
+  fill: #bcbcbc;
+}

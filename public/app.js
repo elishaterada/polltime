@@ -1,4 +1,4 @@
-/* global _ moment firebase*/
+/* global _ moment d3 firebase */
 
 angular
   .module('app', [
@@ -14,6 +14,7 @@ angular
   .run(run)
   .constant('_', _)
   .constant('moment', moment)
+  .constant('d3', d3)
 
 function config (
   $animateProvider,

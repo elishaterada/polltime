@@ -39,11 +39,7 @@
       layout-padding
       ng-if="$ctrl.voted"
     >
-      <div ng-repeat="answer in $ctrl.poll.answers track by $index">
-        <div class="md-title">
-          {{ answer.text }}: {{ answer.count }}
-        </div>
-      </div>
+      <graph-bar answers="$ctrl.poll.answers"></graph-bar>
 
       <div class="mt2" layout="row" layout-align="center center">
         <div class="md-subheader mr1">Share:</div>
