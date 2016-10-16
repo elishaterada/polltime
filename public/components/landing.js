@@ -9,7 +9,7 @@ angular
     }
   })
 
-function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast, moment) {
+function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast, $state, moment) {
   var ctrl = this
 
   ctrl.$onInit = function () {
@@ -17,7 +17,13 @@ function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast
     ctrl.polls = $firebaseArray(Polls)
     ctrl.newPoll = {
       question: '',
-      answers: [ {}, {} ]
+      answers: [ {
+        text: '',
+        count: 0
+      }, {
+        text: '',
+        count: 0
+      } ]
     }
   }
 
@@ -31,7 +37,10 @@ function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast
     }
 
     ctrl.polls.$add(pollData)
-      .then(function () {
+      .then(function (ref) {
+        var id = ref.key
+
+        $state.go('polls', {id: id})
         ctrl.newPoll = null
 
         $mdToast.show(

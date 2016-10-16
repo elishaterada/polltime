@@ -1,0 +1,50 @@
+<div class="flex-fill" layout="row" layout-align="center start">
+  <div flex flex-gt-sm="75">
+
+    <div class="mt2 md-title"
+         layout="row"
+         layout-align="center center">
+      {{ $ctrl.poll.question }}
+    </div>
+
+    <!-- Vote -->
+    <form
+      class="mt2"
+      layout="column"
+      layout-align="center center"
+      layout-padding
+      ng-if="!$ctrl.voted"
+      ng-submit="$ctrl.vote($ctrl.choice)"
+    >
+
+      <md-radio-group ng-model="$ctrl.choice">
+        <md-radio-button
+          ng-repeat="answer in $ctrl.poll.answers track by $index"
+          value="{{ $index }}">
+          {{ answer.text }}
+        </md-radio-button>
+      </md-radio-group>
+
+      <md-button ng-if="$ctrl.choice"
+                 class="md-raised md-primary"
+                 type="submit">Vote</md-button>
+
+    </form>
+
+    <!-- Result -->
+    <div
+      class="mt2"
+      layout="column"
+      layout-align="center center"
+      layout-padding
+      ng-if="$ctrl.voted"
+    >
+      <div ng-repeat="answer in $ctrl.poll.answers track by $index">
+        <div class="md-title">
+          {{ answer.text }}: {{ answer.count }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

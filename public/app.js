@@ -6,6 +6,7 @@ angular
     'ngMaterial',
     'ngAria',
     'ui.router',
+    'ngStorage',
     'firebase'
   ])
   .controller('AppCtrl', AppCtrl)
@@ -72,6 +73,12 @@ function config (
           return Auth.$waitForSignIn()
         }
       }
+    })
+
+    // Polls
+    .state('polls', {
+      url: '/polls/:id',
+      component: 'polls'
     })
 
     // Not Found
