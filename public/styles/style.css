@@ -110,3 +110,7 @@ md-icon.md-custom-theme.md-48 {
   height: 48px;
   font-size: 48px;
 }
+
+.md-custom-theme .md-errors-spacer {
+  min-height: 0;
+}

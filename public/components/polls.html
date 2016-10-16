@@ -44,6 +44,24 @@
           {{ answer.text }}: {{ answer.count }}
         </div>
       </div>
+
+      <div class="mt2" layout="row" layout-align="center center">
+        <div class="md-subheader mr1">Share:</div>
+
+        <md-input-container>
+          <input
+            id="shortURL"
+            ng-model="$ctrl.shortURL"
+            aria-label="Share URL">
+        </md-input-container>
+
+        <md-button
+          class="md-primary md-raised clipboard"
+          data-clipboard-action="copy"
+          data-clipboard-target="#shortURL"
+        >Copy</md-button>
+      </div>
+
     </div>
 
   </div>
