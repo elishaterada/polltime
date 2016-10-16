@@ -5,6 +5,10 @@
       "$uid": {
         ".write": "$uid === auth.uid"
       }
+    },
+    "polls": {
+      ".read": true,
+      ".write": "auth != null && newData.exists() || data.child('ownerID').val() === auth.uid"
     }
   }
 }

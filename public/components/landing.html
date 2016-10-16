@@ -1,6 +1,42 @@
-<div class="flex-fill" layout="column" layout-align="center center">
-  <div layout="column" layout-align="center center">
-    <md-icon class="md-48">home</md-icon>
-    <div class="md-title-1">Landing Page</div>
+<div class="flex-fill" layout="row" layout-align="center start">
+  <div flex flex-gt-sm="75">
+    <form
+      class="mt2"
+      flex
+      flex-gt-sm="50"
+      flex-offset-gt-sm="25"
+      layout-padding
+      ng-submit="$ctrl.createPoll($ctrl.newPoll)"
+    >
+
+      <md-input-container class="md-block">
+        <label>Enter your poll question</label>
+        <input ng-model="$ctrl.newPoll.question"
+               type="text"
+               ng-required="$ctrl.newPoll.answers[0]"
+               md-no-asterisk>
+      </md-input-container>
+
+      <div ng-if="$ctrl.newPoll.question">
+        <md-input-container
+          class="md-block"
+          ng-repeat="answer in $ctrl.newPoll.answers track by $index"
+        >
+          <label>Answer</label>
+          <input ng-model="$ctrl.newPoll.answers[$index].text"
+                 type="text"
+                 ng-required="$index === 0">
+        </md-input-container>
+
+        <md-button ng-if="$ctrl.newPoll.answers[0]"
+                   class="md-raised md-primary"
+                   type="submit">Create</md-button>
+
+        <md-button ng-if="$ctrl.newPoll.answers[0]"
+                   ng-click="$ctrl.newPoll = null"
+                   type="button">Cancel</md-button>
+      </div>
+
+    </form>
   </div>
 </div>

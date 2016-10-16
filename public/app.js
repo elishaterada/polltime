@@ -63,7 +63,7 @@ function config (
   // State Setup
   $stateProvider
 
-  // Landing
+    // Landing
     .state('landing', {
       url: '',
       component: 'landing',
@@ -111,4 +111,13 @@ angular
 
 function Profiles () {
   return firebase.database().ref('profiles')
+}
+
+// Polls
+angular
+  .module('app')
+  .factory('Polls', Polls)
+
+function Polls () {
+  return firebase.database().ref('polls')
 }
