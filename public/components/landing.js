@@ -28,8 +28,14 @@ function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast
   }
 
   ctrl.createPoll = function (newPoll) {
+    var uid = null
+
+    if (ctrl.user) {
+      uid = ctrl.user.uid
+    }
+
     var pollData = {
-      'ownerID': ctrl.user.uid,
+      'ownerID': uid,
       'question': newPoll.question,
       'answers': newPoll.answers,
       'created': moment().format(),
