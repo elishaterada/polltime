@@ -9,7 +9,7 @@ angular
     }
   })
 
-function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArray, $mdToast, $localStorage, $http, moment, $window) {
+function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArray, $mdToast, $localStorage, $http, $state, moment, $window) {
   var ctrl = this
   var clipboard = new $window.Clipboard('.clipboard')
 
@@ -58,6 +58,10 @@ function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArr
             .hideDelay(3000)
         )
       })
+  }
+
+  ctrl.goTo = function (route) {
+    $state.go(route)
   }
 
   function getShortURL () {

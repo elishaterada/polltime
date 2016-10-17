@@ -20,7 +20,8 @@ function config (
   $animateProvider,
   $mdThemingProvider,
   $urlRouterProvider,
-  $stateProvider
+  $stateProvider,
+  $locationProvider
 ) {
   // ng-animate disable method
   $animateProvider.classNameFilter(/^(?:(?!ng-animate-disabled).)*$/)
@@ -58,16 +59,23 @@ function config (
 
   $mdThemingProvider.setDefaultTheme('custom')
 
+  // HTML 5 Mode
+  $locationProvider
+    .html5Mode({
+      enabled: true,
+      requireBase: true
+    })
+
   // Router Setup
+  $urlRouterProvider.when('', '/')
   $urlRouterProvider.otherwise('/notfound')
-  $urlRouterProvider.when('/', '/landing')
 
   // State Setup
   $stateProvider
 
     // Landing
     .state('landing', {
-      url: '',
+      url: '/',
       component: 'landing',
       resolve: {
         user: function (Auth) {
