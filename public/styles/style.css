@@ -139,11 +139,19 @@ md-icon.md-custom-theme.md-48 {
   max-height: 100%;
 }
 
-.graph text {
+/* D3 Bar Graph */
+
+.graph-bar text.answer {
   fill: #fff;
   font-size: 14px;
 }
 
-.graph rect.potential {
-  fill: #bcbcbc;
+.graph-bar text.count {
+  fill: #fff;
+  font-size: 14px;
+  text-align: right;
+}
+
+.graph-bar rect.potential {
+  fill: #ababab;
 }

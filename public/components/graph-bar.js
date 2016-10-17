@@ -61,7 +61,7 @@ function GraphBarCtrl (d3) {
         .append('g')
         .attr('class', 'bar')
 
-    // Potential
+    // Bar: Container
     bars.append('rect')
       .attr('class', 'potential')
       .attr('width', conf.width)
@@ -70,7 +70,7 @@ function GraphBarCtrl (d3) {
         return 'translate(0, ' + (conf.barHeight + conf.padding) * i + ')'
       })
 
-    // Actual
+    // Bar: Actual Value
     bars.append('rect')
       .attr('class', 'actual')
       .attr('z-index', 1)
@@ -83,17 +83,33 @@ function GraphBarCtrl (d3) {
         return c10(d.text)
       })
 
-    // Label
+    // Label: Answer
     bars.append('text')
       .text(function (d) {
         return d.text
       })
+      .attr('class', 'answer')
       .attr('transform', function (d, i) {
         var stepOffset = (conf.barHeight + conf.padding) * i
         var textOffset = (conf.barHeight + conf.padding) / 2
         var totalOffset = stepOffset + textOffset
 
         return 'translate(' + conf.padding + ', ' + totalOffset + ')'
+      })
+
+    // Label: Votes
+    bars.append('text')
+      .text(function (d) {
+        return d.count
+      })
+      .attr('class', 'count')
+      .attr('transform', function (d, i) {
+        var yStepOffset = (conf.barHeight + conf.padding) * i
+        var yTextOffset = (conf.barHeight + conf.padding) / 2
+        var yPosition = yStepOffset + yTextOffset
+        var xPosition = conf.width - conf.padding * 2
+
+        return 'translate(' + xPosition + ', ' + yPosition + ')'
       })
 
     // Transitions
