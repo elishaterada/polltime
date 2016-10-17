@@ -29,7 +29,10 @@
         <div>
           <md-button
             ng-if="!$ctrl.user"
-            ng-click="$ctrl.signIn()">Sign In with Google</md-button>
+            ng-click="$ctrl.signIn()">
+            <md-tooltip>Google Sign-In</md-tooltip>
+            Sign In
+          </md-button>
           <md-list-item flex="nogrow" ng-if="$ctrl.user">
             <img ng-src="{{ $ctrl.user.photoURL }}"
                  class="md-avatar mg0">
