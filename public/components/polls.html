@@ -5,6 +5,7 @@
          layout="row"
          layout-align="center center">
       {{ $ctrl.poll.question }}
+      <md-progress-circular ng-if="!$ctrl.poll.answers"></md-progress-circular>
     </div>
 
     <!-- Vote -->

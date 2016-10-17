@@ -5,9 +5,14 @@
 >
   <md-content>
 
-    <div layout-padding>
-      <p class="md-body-1">Menu</p>
-    </div>
+    <md-list>
+      <md-list-item ng-click="$ctrl.goTo('landing'); $ctrl.toggleLeftNav();">
+        <div>
+          <md-icon>home</md-icon>
+        </div>
+        <div class="md-list-item-text ml1">Home</div>
+      </md-list-item>
+    </md-list>
 
   </md-content>
 </md-sidenav>
@@ -23,7 +28,7 @@
         </md-button>
       </div>
       <div flex layout="row" layout-align="center center">
-        <div>PollTime</div>
+        <div class="md-title link" ng-click="goTo('landing')">Poll Time</div>
       </div>
       <div flex="25" layout="row" layout-align="end center">
         <div>

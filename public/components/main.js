@@ -6,7 +6,7 @@ angular
     controller: MainCtrl
   })
 
-function MainCtrl ($mdSidenav, $timeout, $log, Profiles, Auth) {
+function MainCtrl ($mdSidenav, $timeout, $log, $state, Profiles, Auth) {
   var ctrl = this
 
   ctrl.toggleLeftNav = buildDelayedToggler('leftNav')
@@ -29,6 +29,10 @@ function MainCtrl ($mdSidenav, $timeout, $log, Profiles, Auth) {
     }, function (error) {
       $log.debug(error)
     })
+  }
+
+  ctrl.goTo = function (route) {
+    $state.go(route)
   }
 
   function firebaseAuth () {
