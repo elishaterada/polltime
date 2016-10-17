@@ -97,7 +97,7 @@ function GraphBarCtrl (d3) {
         return 'translate(' + conf.padding + ', ' + totalOffset + ')'
       })
 
-    // Label: Votes
+    // Label: Count
     bars.append('text')
       .text(function (d) {
         return d.count
@@ -120,6 +120,13 @@ function GraphBarCtrl (d3) {
       .attr('width', function (d, i) {
         // Ensure latest date is returned
         return x(data[i].count)
+      })
+
+    transition.selectAll('text.count')
+      .duration(1500)
+      .text(function (d, i) {
+        // Ensure latest date is returned
+        return data[i].count
       })
   }
 }
