@@ -1,10 +1,10 @@
 {
-  "name": "app-name-placeholder",
+  "name": "polltime",
   "version": "0.0.1",
   "description": "App Description Placeholder",
   "main": "/public/index.html",
   "scripts": {
-    "test": "eslint src/app/app.js",
+    "test": "eslint public/app.js",
     "dev": "node server.js"
   },
   "author": "Elisha Terada",
