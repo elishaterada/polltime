@@ -28,7 +28,8 @@ function GraphBarCtrl (d3) {
     .attr('height', conf.height)
 
   ctrl.$onInit = function () {
-    ctrl.showLabels = true
+    ctrl.showAnswers = true
+    ctrl.showCounts = true
   }
 
   ctrl.$onChanges = function () {
@@ -37,7 +38,7 @@ function GraphBarCtrl (d3) {
     }
   }
 
-  ctrl.toggleLabels = function (show) {
+  ctrl.toggleAnswers = function (show) {
     if (show) {
       graph.selectAll('text.answer')
         .transition()
@@ -45,6 +46,20 @@ function GraphBarCtrl (d3) {
         .attr('opacity', 1)
     } else {
       graph.selectAll('text.answer')
+        .transition()
+        .duration(500)
+        .attr('opacity', 0)
+    }
+  }
+
+  ctrl.toggleCounts = function (show) {
+    if (show) {
+      graph.selectAll('text.count')
+        .transition()
+        .duration(500)
+        .attr('opacity', 1)
+    } else {
+      graph.selectAll('text.count')
         .transition()
         .duration(500)
         .attr('opacity', 0)
@@ -112,6 +127,7 @@ function GraphBarCtrl (d3) {
         return d.count
       })
       .attr('class', 'count')
+      .attr('opacity', 1)
       .attr('transform', function (d, i) {
         var yPosition = (conf.barHeight + conf.padding) / 2
         var xPosition = conf.width - conf.padding * 2

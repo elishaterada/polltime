@@ -1,7 +1,15 @@
 <svg class="graph graph-bar"></svg>
-<md-switch
-  class="md-primary"
-  ng-model="$ctrl.showLabels"
-  ng-change="$ctrl.toggleLabels($ctrl.showLabels)">
-  Show Labels
-</md-switch>
+<div layout="row">
+  <md-switch
+    class="md-primary"
+    ng-model="$ctrl.showAnswers"
+    ng-change="$ctrl.toggleAnswers($ctrl.showAnswers)">
+    Show Answers
+  </md-switch>
+  <md-switch
+    class="md-primary"
+    ng-model="$ctrl.showCounts"
+    ng-change="$ctrl.toggleCounts($ctrl.showCounts)">
+    Show Counts
+  </md-switch>
+</div>
