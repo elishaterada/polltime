@@ -27,8 +27,6 @@ function GraphBarCtrl (d3) {
     .attr('width', conf.width)
     .attr('height', conf.height)
 
-  var bars = graph.selectAll('g.bar')
-
   ctrl.$onChanges = function () {
     if (ctrl.answers) {
       renderData(ctrl.answers)
@@ -36,16 +34,18 @@ function GraphBarCtrl (d3) {
   }
 
   function renderData (data) {
-    // Color scheme
+    data = _.orderBy(data, 'count', 'desc')
+
+    // Define scheme
     var c10 = d3.scaleOrdinal(d3.schemeCategory10)
-    c10.domain(data.map(function (d) { return d.text }))
+    c10.domain(ctrl.answers.map(function (d, i) { return data[i].text }))
 
     // Set height
     var newGraphHeight = (conf.barHeight + conf.padding) * data.length
     graph.attr('height', newGraphHeight)
 
     // Set data max
-    var dataMax = d3.max(data, function (d) {
+    var dataMax = d3.max(data, function (d, i) {
       return d.count
     })
 
@@ -55,78 +55,77 @@ function GraphBarCtrl (d3) {
       .range([0, conf.width])
 
     // Bars
-    bars = graph.selectAll('g.bar')
+    var bars = graph.selectAll('g.bar')
       .data(data)
-      .enter()
-        .append('g')
-        .attr('class', 'bar')
+      .enter().append('g')
+      .attr('class', 'bar')
 
     // Bar: Container
     bars.append('rect')
       .attr('class', 'potential')
       .attr('width', conf.width)
       .attr('height', conf.barHeight)
-      .attr('transform', function (d, i) {
-        return 'translate(0, ' + (conf.barHeight + conf.padding) * i + ')'
-      })
 
     // Bar: Actual Value
     bars.append('rect')
       .attr('class', 'actual')
-      .attr('z-index', 1)
       .attr('width', 0)
       .attr('height', conf.barHeight)
-      .attr('transform', function (d, i) {
-        return 'translate(0, ' + (conf.barHeight + conf.padding) * i + ')'
-      })
-      .attr('fill', function (d) {
+      .attr('fill', function (d, i) {
         return c10(d.text)
       })
 
     // Label: Answer
     bars.append('text')
-      .text(function (d) {
+      .text(function (d, i) {
         return d.text
       })
       .attr('class', 'answer')
       .attr('transform', function (d, i) {
-        var stepOffset = (conf.barHeight + conf.padding) * i
-        var textOffset = (conf.barHeight + conf.padding) / 2
-        var totalOffset = stepOffset + textOffset
+        var yPosition = (conf.barHeight + conf.padding) / 2
 
-        return 'translate(' + conf.padding + ', ' + totalOffset + ')'
+        return 'translate(' + conf.padding + ', ' + yPosition + ')'
       })
 
     // Label: Count
     bars.append('text')
-      .text(function (d) {
+      .text(function (d, i) {
         return d.count
       })
       .attr('class', 'count')
       .attr('transform', function (d, i) {
-        var yStepOffset = (conf.barHeight + conf.padding) * i
-        var yTextOffset = (conf.barHeight + conf.padding) / 2
-        var yPosition = yStepOffset + yTextOffset
+        var yPosition = (conf.barHeight + conf.padding) / 2
         var xPosition = conf.width - conf.padding * 2
 
         return 'translate(' + xPosition + ', ' + yPosition + ')'
       })
 
     // Transitions
-    var transition = graph.transition()
-
-    transition.selectAll('rect.actual')
-      .duration(1500)
-      .attr('width', function (d, i) {
-        // Ensure latest date is returned
-        return x(data[i].count)
+    graph.selectAll('g.bar')
+      .transition()
+      .duration(500)
+      .attr('transform', function (d, i) {
+        console.log(i, d)
+        return 'translate(0, ' + (conf.barHeight + conf.padding) * i + ')'
       })
 
-    transition.selectAll('text.count')
-      .duration(1500)
+    graph.selectAll('text.answer')
+      .transition()
       .text(function (d, i) {
-        // Ensure latest date is returned
+        return data[i].text
+      })
+
+    graph.selectAll('text.count')
+      .transition()
+      .text(function (d, i) {
         return data[i].count
+      })
+
+    graph.selectAll('rect.actual')
+      .transition()
+      .duration(1500)
+      .attr('width', function (d, i) {
+        return x(data[i].count)
       })
   }
 }
