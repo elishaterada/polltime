@@ -23,17 +23,17 @@
           ng-repeat="answer in $ctrl.newPoll.answers track by $index"
         >
           <label>Answer</label>
-          <input ng-model="$ctrl.newPoll.answers[$index].text"
+          <input ng-model="$ctrl.newPoll.answers[$index]"
                  type="text"
-                 ng-required="$index === 0">
+                 ng-required="$index < 2">
         </md-input-container>
 
-        <md-button ng-if="$ctrl.newPoll.answers[0]"
+        <md-button ng-if="$ctrl.newPoll.question"
                    class="md-raised md-primary"
                    type="submit">Create</md-button>
 
-        <md-button ng-if="$ctrl.newPoll.answers[0]"
-                   ng-click="$ctrl.newPoll = null"
+        <md-button ng-if="$ctrl.newPoll.question"
+                   ng-click="$ctrl.cancel()"
                    type="button">Cancel</md-button>
       </div>
 
