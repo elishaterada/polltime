@@ -27,9 +27,27 @@ function GraphBarCtrl (d3) {
     .attr('width', conf.width)
     .attr('height', conf.height)
 
+  ctrl.$onInit = function () {
+    ctrl.showLabels = true
+  }
+
   ctrl.$onChanges = function () {
     if (ctrl.answers) {
       renderData(ctrl.answers)
+    }
+  }
+
+  ctrl.toggleLabels = function (show) {
+    if (show) {
+      graph.selectAll('text.answer')
+        .transition()
+        .duration(500)
+        .attr('opacity', 1)
+    } else {
+      graph.selectAll('text.answer')
+        .transition()
+        .duration(500)
+        .attr('opacity', 0)
     }
   }
 
@@ -81,6 +99,7 @@ function GraphBarCtrl (d3) {
         return d.text
       })
       .attr('class', 'answer')
+      .attr('opacity', 1)
       .attr('transform', function (d, i) {
         var yPosition = (conf.barHeight + conf.padding) / 2
 
@@ -105,7 +124,6 @@ function GraphBarCtrl (d3) {
       .transition()
       .duration(500)
       .attr('transform', function (d, i) {
-        console.log(i, d)
         return 'translate(0, ' + (conf.barHeight + conf.padding) * i + ')'
       })
 
