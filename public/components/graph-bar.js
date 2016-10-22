@@ -11,6 +11,7 @@ angular
 
 function GraphBarCtrl (d3) {
   var ctrl = this
+  var initialized = false
 
   var conf = {
     width: 330,
@@ -33,7 +34,11 @@ function GraphBarCtrl (d3) {
   }
 
   ctrl.$onChanges = function () {
-    if (ctrl.answers) {
+    if (ctrl.answers && !initialized) {
+      generateChart(ctrl.answers)
+      renderData(ctrl.answers)
+      initialized = true
+    } else {
       renderData(ctrl.answers)
     }
   }
@@ -66,32 +71,23 @@ function GraphBarCtrl (d3) {
     }
   }
 
-  function renderData (data) {
+  function generateChart (data) {
     data = _.orderBy(data, 'count', 'desc')
 
     // Define scheme
     var c10 = d3.scaleOrdinal(d3.schemeCategory10)
-    c10.domain(ctrl.answers.map(function (d, i) { return data[i].text }))
+    c10.domain(ctrl.answers.map(function (d, i) { return d }))
 
     // Set height
     var newGraphHeight = (conf.barHeight + conf.padding) * data.length
     graph.attr('height', newGraphHeight)
 
-    // Set data max
-    var dataMax = d3.max(data, function (d, i) {
-      return d.count
-    })
-
-    // Set data spectrum
-    var x = d3.scaleLinear()
-      .domain([0, dataMax])
-      .range([0, conf.width])
-
     // Bars
     var bars = graph.selectAll('g.bar')
-      .data(data)
-      .enter().append('g')
-      .attr('class', 'bar')
+      .data(data, function (d) { return d.text })
+      .enter()
+        .append('g')
+        .attr('class', 'bar')
 
     // Bar: Container
     bars.append('rect')
@@ -134,32 +130,43 @@ function GraphBarCtrl (d3) {
 
         return 'translate(' + xPosition + ', ' + yPosition + ')'
       })
+  }
 
-    // Transitions
-    graph.selectAll('g.bar')
+  function renderData (data) {
+    data = _.orderBy(data, 'count', 'desc')
+
+    // Set data max
+    var dataMax = d3.max(data, function (d, i) {
+      return d.count
+    })
+
+    // Set data spectrum
+    var x = d3.scaleLinear()
+      .domain([0, dataMax])
+      .range([0, conf.width])
+
+    var bars = graph.selectAll('g.bar')
+      .data(data, function (d) { return d.text })
+
+    bars
       .transition()
-      .duration(500)
+      .duration(1500)
       .attr('transform', function (d, i) {
         return 'translate(0, ' + (conf.barHeight + conf.padding) * i + ')'
       })
 
-    graph.selectAll('text.answer')
+    bars.select('text.count')
       .transition()
+      .duration(500)
       .text(function (d, i) {
-        return data[i].text
+        return d.count
       })
 
-    graph.selectAll('text.count')
-      .transition()
-      .text(function (d, i) {
-        return data[i].count
-      })
-
-    graph.selectAll('rect.actual')
+    bars.select('rect.actual')
       .transition()
       .duration(1500)
       .attr('width', function (d, i) {
-        return x(data[i].count)
+        return x(d.count)
       })
   }
 }
