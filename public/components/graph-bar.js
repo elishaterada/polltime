@@ -2,7 +2,7 @@
 angular
   .module('app')
   .component('graphBar', {
-    templateUrl: 'components/graph-bar.html',
+    template: '<svg class="graph graph-bar"></svg>',
     controller: GraphBarCtrl,
     bindings: {
       answers: '<',
