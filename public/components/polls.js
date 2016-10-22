@@ -23,6 +23,9 @@ function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArr
 
     ctrl.voted = $localStorage[$stateParams.id]
 
+    ctrl.showAnswers = true
+    ctrl.showCounts = true
+
     ctrl.shortURL = getShortURL()
   }
 

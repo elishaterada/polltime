@@ -40,7 +40,24 @@
       layout-padding
       ng-if="$ctrl.voted"
     >
-      <graph-bar answers="$ctrl.poll.answers"></graph-bar>
+      <graph-bar
+        answers="$ctrl.poll.answers"
+        show-answers="$ctrl.showAnswers"
+        show-counts="$ctrl.showCounts"
+      ></graph-bar>
+
+      <div layout="row">
+        <md-switch
+          class="md-primary"
+          ng-model="$ctrl.showAnswers">
+          Show Answers
+        </md-switch>
+        <md-switch
+          class="md-primary"
+          ng-model="$ctrl.showCounts">
+          Show Counts
+        </md-switch>
+      </div>
 
       <div class="mt2"
            layout="row"

@@ -5,7 +5,9 @@ angular
     templateUrl: 'components/graph-bar.html',
     controller: GraphBarCtrl,
     bindings: {
-      answers: '<'
+      answers: '<',
+      showAnswers: '<',
+      showCounts: '<'
     }
   })
 
@@ -41,10 +43,8 @@ function GraphBarCtrl (d3) {
     } else {
       renderData(ctrl.answers)
     }
-  }
 
-  ctrl.toggleAnswers = function (show) {
-    if (show) {
+    if (ctrl.showAnswers) {
       graph.selectAll('text.answer')
         .transition()
         .duration(500)
@@ -55,10 +55,8 @@ function GraphBarCtrl (d3) {
         .duration(500)
         .attr('opacity', 0)
     }
-  }
 
-  ctrl.toggleCounts = function (show) {
-    if (show) {
+    if (ctrl.showCounts) {
       graph.selectAll('text.count')
         .transition()
         .duration(500)
