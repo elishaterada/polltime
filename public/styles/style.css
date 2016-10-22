@@ -107,6 +107,16 @@ a:active  {
 }
 
 /* Material Design */
+md-input-container.md-custom-theme.-lg .md-input {
+  font-size: 32px;
+  height: 1.75em;
+  line-height: 2;
+}
+
+md-input-container.md-custom-theme.-simple .md-input {
+  border-color: transparent;
+}
+
 md-icon.md-custom-theme.md-36 {
   width: 36px;
   height: 36px;

@@ -9,12 +9,16 @@
       ng-submit="$ctrl.createPoll($ctrl.newPoll)"
     >
 
-      <md-input-container class="md-block">
-        <label>Enter your poll question</label>
+      <md-input-container
+        md-no-float
+        class="md-block mt2 -lg -simple">
         <input ng-model="$ctrl.newPoll.question"
                type="text"
+               placeholder="Ask your question"
                ng-required="$ctrl.newPoll.answers[0]"
-               md-no-asterisk>
+               md-no-asterisk
+               autofocus
+        >
       </md-input-container>
 
       <div ng-if="$ctrl.newPoll.question">
@@ -25,6 +29,7 @@
           <label>Answer</label>
           <input ng-model="$ctrl.newPoll.answers[$index]"
                  type="text"
+                 md-maxlength="44"
                  ng-required="$index < 2">
         </md-input-container>
 
