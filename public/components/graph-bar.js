@@ -76,7 +76,7 @@ function GraphBarCtrl (d3) {
 
     // Define scheme
     var c10 = d3.scaleOrdinal(d3.schemeCategory10)
-    c10.domain(ctrl.answers.map(function (d, i) { return d }))
+    c10.domain(ctrl.answers.map(function (d, i) { return d.text }))
 
     // Set height
     var newGraphHeight = (conf.barHeight + conf.padding) * data.length
