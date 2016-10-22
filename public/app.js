@@ -87,7 +87,12 @@ function config (
     // Polls
     .state('polls', {
       url: '/polls/:id',
-      component: 'polls'
+      component: 'polls',
+      resolve: {
+        user: function (Auth) {
+          return Auth.$waitForSignIn()
+        }
+      }
     })
 
     // Not Found

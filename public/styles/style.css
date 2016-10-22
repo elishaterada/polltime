@@ -119,8 +119,7 @@ md-icon.md-custom-theme.md-48 {
   font-size: 48px;
 }
 
-.md-button.md-custom-theme.md-primary,
-.md-button.md-custom-theme.md-accent {
+.md-button.md-custom-theme.md-raised {
   padding-left: 2em;
   padding-right: 2em;
 }

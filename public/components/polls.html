@@ -42,8 +42,9 @@
     >
       <graph-bar answers="$ctrl.poll.answers"></graph-bar>
 
-      <div class="mt2" layout="row" layout-align="center center">
-        <div class="md-subheader mr1">Share:</div>
+      <div class="mt2"
+           layout="row"
+           layout-align="center center">
 
         <md-input-container>
           <input
@@ -53,13 +54,17 @@
         </md-input-container>
 
         <md-button
-          class="md-raised clipboard"
+          md-no-ink
+          class="md-primary clipboard"
           data-clipboard-action="copy"
           data-clipboard-target="#shortURL"
-        >Copy</md-button>
+        >Copy Poll URL</md-button>
       </div>
 
-      <md-button class="md-accent md-raised" ng-click="$ctrl.goTo('landing')">Create New Poll</md-button>
+      <md-button class="md-primary md-raised" ng-click="$ctrl.goTo('landing')">Create New Poll</md-button>
+
+      <md-button class="md-primary" ng-click="$ctrl.clonePoll($ctrl.poll)">Clone Poll</md-button>
+
 
     </div>
 

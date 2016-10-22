@@ -64,6 +64,47 @@ function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArr
     $state.go(route)
   }
 
+  ctrl.clonePoll = function (poll) {
+    var uid = null
+    var answers = []
+
+    if (ctrl.user) {
+      uid = ctrl.user.uid
+    }
+
+    // Build answers format
+    _.each(poll.answers, function (value, key) {
+      if (value) {
+        answers.push({
+          text: value.text,
+          count: 0
+        })
+      }
+    })
+
+    var pollData = {
+      'ownerID': uid,
+      'question': poll.question,
+      'answers': answers,
+      'created': moment().format(),
+      'modified': moment().format()
+    }
+
+    ctrl.polls.$add(pollData)
+      .then(function (ref) {
+        var id = ref.key
+
+        $state.go('polls', {id: id})
+        ctrl.newPoll = null
+
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Created Poll')
+            .hideDelay(3000)
+        )
+      })
+  }
+
   function getShortURL () {
     $http({
       method: 'POST',
