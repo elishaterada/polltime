@@ -72,7 +72,10 @@ function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast
   ctrl.$doCheck = function () {
     // Automatically append next answer
     // IF: last item has a value
-    if (_.last(ctrl.newPoll.answers) !== '') {
+    // IF: total items are less than equal to 10
+    if (_.last(ctrl.newPoll.answers) !== '' &&
+        ctrl.newPoll.answers.length < 10
+    ) {
       ctrl.newPoll.answers.push('')
     }
   }
