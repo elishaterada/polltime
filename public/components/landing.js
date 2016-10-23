@@ -15,8 +15,8 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
   }
 
   ctrl.$onInit = function () {
-    Auth.$onAuthStateChanged(function (user) {
-      ctrl.user = user
+    Auth.$onAuthStateChanged(function (firebaseuser) {
+      ctrl.user = firebaseuser
     })
     ctrl.profiles = $firebaseObject(Profiles)
     ctrl.polls = $firebaseArray(Polls)
@@ -30,6 +30,9 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
   ctrl.createPoll = function (newPoll) {
     var uid = null
     var answers = []
+
+    // Close virtual keyboard
+    angular.element(document.querySelector('.md-input-focus')).blur()
 
     if (ctrl.user) {
       uid = ctrl.user.uid
@@ -58,7 +61,7 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
         var id = ref.key
 
         $localStorage[id + '_created'] = true
-        $state.go('polls', {id: id})
+
         ctrl.newPoll = null
 
         $mdToast.show(
@@ -66,6 +69,8 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
             .textContent('Created Poll')
             .hideDelay(3000)
         )
+
+        $state.go('polls', { id: id })
       })
   }
 

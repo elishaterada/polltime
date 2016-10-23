@@ -11,8 +11,8 @@ function PollsCtrl (Auth, Profiles, Polls, $stateParams, $firebaseObject, $fireb
   var clipboard = new $window.Clipboard('.clipboard')
 
   ctrl.$onInit = function () {
-    Auth.$onAuthStateChanged(function (user) {
-      ctrl.user = user
+    Auth.$onAuthStateChanged(function (firebaseuser) {
+      ctrl.user = firebaseuser
     })
     ctrl.profiles = $firebaseObject(Profiles)
     ctrl.polls = $firebaseArray(Polls)
