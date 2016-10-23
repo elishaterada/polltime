@@ -138,6 +138,10 @@ md-icon.md-custom-theme.md-48 {
   min-height: 0;
 }
 
+md-toolbar.md-custom-theme.md-hue-1.main-navigation {
+  background-color: rgb(250, 250, 250);
+}
+
 /* D3 Graph */
 .graph {
   position: relative;
