@@ -148,7 +148,7 @@ function GraphBarCtrl (d3) {
 
     bars
       .transition()
-      .duration(1500)
+      .duration(500)
       .attr('transform', function (d, i) {
         return 'translate(0, ' + (conf.barHeight + conf.padding) * i + ')'
       })
@@ -162,7 +162,8 @@ function GraphBarCtrl (d3) {
 
     bars.select('rect.actual')
       .transition()
-      .duration(1500)
+      .delay(250)
+      .duration(750)
       .attr('width', function (d, i) {
         return x(d.count)
       })
