@@ -30,6 +30,11 @@
                  class="md-raised md-primary"
                  type="submit">Vote</md-button>
 
+      <md-button ng-if="$ctrl.created"
+                 ng-click="$ctrl.skipVote()"
+                 class="md-primary"
+                 type="button">Skip Vote</md-button>
+
     </form>
 
     <!-- Result -->
@@ -81,7 +86,6 @@
       <md-button class="md-primary md-raised" ng-click="$ctrl.goTo('landing')">Create New Poll</md-button>
 
       <md-button class="md-primary" ng-click="$ctrl.clonePoll($ctrl.poll)">Clone Poll</md-button>
-
 
     </div>
 

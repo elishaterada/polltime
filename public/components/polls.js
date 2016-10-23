@@ -21,7 +21,8 @@ function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArr
       ctrl.poll = polls.$getRecord($stateParams.id)
     })
 
-    ctrl.voted = $localStorage[$stateParams.id]
+    ctrl.created = $localStorage[$stateParams.id + '_created']
+    ctrl.voted = $localStorage[$stateParams.id + '_voted']
 
     ctrl.showAnswers = true
     ctrl.showCounts = true
@@ -52,8 +53,8 @@ function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArr
 
     ctrl.polls.$save(ctrl.poll)
       .then(function () {
-        $localStorage[$stateParams.id] = true
-        ctrl.voted = $localStorage[$stateParams.id]
+        $localStorage[$stateParams.id + '_voted'] = true
+        ctrl.voted = $localStorage[$stateParams.id + '_voted']
 
         $mdToast.show(
           $mdToast.simple()
@@ -61,6 +62,11 @@ function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArr
             .hideDelay(3000)
         )
       })
+  }
+
+  ctrl.skipVote = function () {
+    $localStorage[$stateParams.id + '_voted'] = true
+    ctrl.voted = $localStorage[$stateParams.id + '_voted']
   }
 
   ctrl.goTo = function (route) {

@@ -9,7 +9,7 @@ angular
     }
   })
 
-function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast, $state, moment) {
+function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast, $state, $localStorage, moment) {
   var ctrl = this
 
   var pollDefault = {
@@ -57,6 +57,7 @@ function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast
       .then(function (ref) {
         var id = ref.key
 
+        $localStorage[id + '_created'] = true
         $state.go('polls', {id: id})
         ctrl.newPoll = null
 
