@@ -76,23 +76,13 @@ function config (
     // Landing
     .state('landing', {
       url: '/',
-      component: 'landing',
-      resolve: {
-        user: function (Auth) {
-          return Auth.$waitForSignIn()
-        }
-      }
+      component: 'landing'
     })
 
     // Polls
     .state('polls', {
       url: '/polls/:id',
-      component: 'polls',
-      resolve: {
-        user: function (Auth) {
-          return Auth.$waitForSignIn()
-        }
-      }
+      component: 'polls'
     })
 
     // Not Found

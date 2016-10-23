@@ -3,17 +3,17 @@ angular
   .module('app')
   .component('polls', {
     templateUrl: 'components/polls.html',
-    controller: PollsCtrl,
-    bindings: {
-      user: '<'
-    }
+    controller: PollsCtrl
   })
 
-function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArray, $mdToast, $localStorage, $http, $state, $location, moment, $window) {
+function PollsCtrl (Auth, Profiles, Polls, $stateParams, $firebaseObject, $firebaseArray, $mdToast, $localStorage, $http, $state, $location, moment, $window) {
   var ctrl = this
   var clipboard = new $window.Clipboard('.clipboard')
 
   ctrl.$onInit = function () {
+    Auth.$onAuthStateChanged(function (user) {
+      ctrl.user = user
+    })
     ctrl.profiles = $firebaseObject(Profiles)
     ctrl.polls = $firebaseArray(Polls)
 

@@ -3,13 +3,10 @@ angular
   .module('app')
   .component('landing', {
     templateUrl: 'components/landing.html',
-    controller: LandingCtrl,
-    bindings: {
-      user: '<'
-    }
+    controller: LandingCtrl
   })
 
-function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast, $state, $localStorage, moment) {
+function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast, $state, $localStorage, moment) {
   var ctrl = this
 
   var pollDefault = {
@@ -18,6 +15,9 @@ function LandingCtrl (Profiles, Polls, $firebaseObject, $firebaseArray, $mdToast
   }
 
   ctrl.$onInit = function () {
+    Auth.$onAuthStateChanged(function (user) {
+      ctrl.user = user
+    })
     ctrl.profiles = $firebaseObject(Profiles)
     ctrl.polls = $firebaseArray(Polls)
     ctrl.newPoll = angular.copy(pollDefault)
