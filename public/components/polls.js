@@ -9,7 +9,7 @@ angular
     }
   })
 
-function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArray, $mdToast, $localStorage, $http, $state, moment, $window) {
+function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArray, $mdToast, $localStorage, $http, $state, $location, moment, $window) {
   var ctrl = this
   var clipboard = new $window.Clipboard('.clipboard')
 
@@ -119,7 +119,7 @@ function PollsCtrl (Profiles, Polls, $stateParams, $firebaseObject, $firebaseArr
       method: 'POST',
       url: 'https://www.googleapis.com/urlshortener/v1/url',
       params: { key: 'AIzaSyApu8K6ALu_piGLcSAoP3fuZcPOo0PuT7c' },
-      data: {'longUrl': $window.location.href}
+      data: {'longUrl': $location.absUrl()}
     })
       .then(function (res) {
         ctrl.shortURL = res.data.id
