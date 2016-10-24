@@ -32,7 +32,7 @@ function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
     )
   }
 
-  ctrl.$ngChanges = function () {
+  ctrl.$onChanges = function () {
     if (map.loaded()) {
       loadMarkers()
     }
