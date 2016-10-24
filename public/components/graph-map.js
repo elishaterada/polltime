@@ -11,7 +11,7 @@ angular
     }
   })
 
-function GraphMapCtrl (mapboxToken, mapboxgl) {
+function GraphMapCtrl ($timeout, mapboxToken, mapboxgl) {
   var ctrl = this
   var map = null
 
@@ -26,7 +26,9 @@ function GraphMapCtrl (mapboxToken, mapboxgl) {
       style: 'mapbox://styles/mapbox/dark-v9'
     })
 
-    loadMarkers()
+    $timeout(function () {
+      loadMarkers()
+    }, 0)
   }
 
   ctrl.$onChanges = function () {

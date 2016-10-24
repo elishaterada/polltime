@@ -10,18 +10,14 @@
     <!-- Answer -->
     <form
       class="mt2"
-      layout="row"
-      layout-align="center center"
+      layout="column"
+      layout-align="center stretch"
       layout-padding
       ng-if="$ctrl.poll.type === 'geo' && !$ctrl.answered"
       ng-submit="$ctrl.answer($ctrl.choice)"
     >
 
       <md-autocomplete
-        class="mb2"
-        flex
-        flex-gt-md="75"
-        flex-gt-md="50"
         md-delay="500"
         md-selected-item="$ctrl.choice"
         md-search-text="$ctrl.searchText"
@@ -39,14 +35,16 @@
         </md-not-found>
       </md-autocomplete>
 
-      <md-button ng-if="$ctrl.choice"
-                 class="md-raised md-primary"
-                 type="submit">Send Answer</md-button>
+      <div class="mt2" layout="column" layout-align="center center">
+        <md-button ng-if="$ctrl.choice"
+                   class="md-raised md-primary"
+                   type="submit">Send Answer</md-button>
 
-      <md-button ng-if="$ctrl.created"
-                 ng-click="$ctrl.skipAnswer()"
-                 class="md-primary"
-                 type="button">Skip to Results</md-button>
+        <md-button ng-if="$ctrl.created"
+                   ng-click="$ctrl.skipAnswer()"
+                   class="md-primary"
+                   type="button">Skip to Results</md-button>
+      </div>
 
     </form>
 
