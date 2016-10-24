@@ -11,9 +11,10 @@ angular
     }
   })
 
-function GraphMapCtrl ($timeout, mapboxToken, mapboxgl) {
+function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
   var ctrl = this
   var map = null
+  var intervalID
 
   ctrl.$onInit = function () {
     ctrl.showAnswers = true
@@ -26,14 +27,21 @@ function GraphMapCtrl ($timeout, mapboxToken, mapboxgl) {
       style: 'mapbox://styles/mapbox/dark-v9'
     })
 
-    $timeout(function () {
-      loadMarkers()
-    }, 0)
+    intervalID = $interval(
+      mapInitLoadMarkers, 250
+    )
   }
 
-  ctrl.$onChanges = function () {
-    if (map) {
+  ctrl.$ngChanges = function () {
+    if (map.loaded()) {
       loadMarkers()
+    }
+  }
+
+  function mapInitLoadMarkers () {
+    if (map.loaded()) {
+      loadMarkers()
+      $interval.cancel(intervalID)
     }
   }
 
