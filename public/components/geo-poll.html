@@ -60,28 +60,11 @@
       <graph-map
         ng-if="$ctrl.poll.type === 'geo'"
         answers="$ctrl.poll.answers"
-        show-answers="$ctrl.showAnswers"
-        show-counts="$ctrl.showCounts"
       ></graph-map>
-
-      <div layout="row">
-        <md-switch
-          class="md-primary"
-          ng-model="$ctrl.showAnswers">
-          Show Answers
-        </md-switch>
-        <md-switch
-          class="md-primary"
-          ng-model="$ctrl.showCounts">
-          Show Counts
-        </md-switch>
-      </div>
 
       <share-poll></share-poll>
 
       <md-button class="md-primary md-raised" ng-click="$ctrl.goTo('landing')">Create New Poll</md-button>
-
-      <md-button class="md-primary" ng-click="$ctrl.clonePoll($ctrl.poll)">Clone Poll</md-button>
 
     </div>
 

@@ -1,4 +1,3 @@
-/* global firebase */
 angular
   .module('app')
   .component('geoPoll', {
@@ -71,50 +70,5 @@ function GeoPollCtrl (Auth, Polls, $stateParams, $q, $firebaseArray, $mdToast, $
 
   ctrl.goTo = function (route) {
     $state.go(route)
-  }
-
-  ctrl.clonePoll = function (poll) {
-    var uid = null
-    var choices = []
-
-    if (ctrl.user) {
-      uid = ctrl.user.uid
-    }
-
-    // Build answers format
-    _.each(poll.choices, function (value, key) {
-      if (value) {
-        choices.push({
-          text: value.text,
-          count: 0
-        })
-      }
-    })
-
-    var pollData = {
-      'ownerID': uid,
-      'question': poll.question,
-      'choices': choices,
-      'type': 'mc',
-      'created': moment().format(),
-      'modified': moment().format()
-    }
-
-    ctrl.polls.$add(pollData)
-      .then(function (ref) {
-        var id = ref.key
-
-        $localStorage[id + '_created'] = true
-
-        ctrl.newPoll = null
-
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Created Poll')
-            .hideDelay(3000)
-        )
-
-        $state.go('geoPoll', {id: id})
-      })
   }
 }

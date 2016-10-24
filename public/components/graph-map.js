@@ -5,9 +5,7 @@ angular
     template: '<div id="graph-map"></div>',
     controller: GraphMapCtrl,
     bindings: {
-      answers: '<',
-      showAnswers: '<',
-      showCounts: '<'
+      answers: '<'
     }
   })
 
@@ -33,13 +31,13 @@ function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
   }
 
   ctrl.$onChanges = function () {
-    if (map.loaded()) {
+    if (map && map.loaded()) {
       loadMarkers()
     }
   }
 
   function mapInitLoadMarkers () {
-    if (map.loaded()) {
+    if (map && map.loaded()) {
       loadMarkers()
       $interval.cancel(intervalID)
     }

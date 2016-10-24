@@ -181,10 +181,14 @@ graph-map {
 }
 
 graph-map .marker {
-  background-color: #29B6F6;
-  width: 16px;
-  height: 16px;
+  background-color: #039BE5;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -5px;
   border-radius: 50%;
+  opacity: 0.75;
+  box-shadow: 0 0 15px #29B6F6;
 }
 
 #graph-map {
