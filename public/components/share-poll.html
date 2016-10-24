@@ -1,0 +1,17 @@
+<div layout="row"
+     layout-align="center center">
+
+  <md-input-container>
+    <input
+      id="shortURL"
+      ng-model="$ctrl.shortURL"
+      aria-label="Share URL">
+  </md-input-container>
+
+  <md-button
+    md-no-ink
+    class="md-primary clipboard"
+    data-clipboard-action="copy"
+    data-clipboard-target="#shortURL"
+  >Copy Poll URL</md-button>
+</div>

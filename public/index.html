@@ -6,7 +6,6 @@
   <base href="/">
   <link rel="stylesheet" href="styles/meyer-reset.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="styles/style.css">
 </head>
 <body class="body" layout="row" ng-cloak>
@@ -24,6 +23,7 @@
 
   <!-- Angular Material -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- Other Vendor Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.min.js"></script>
@@ -33,13 +33,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.7/d3.min.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v0.26.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.26.0/mapbox-gl.css' rel='stylesheet' />
 
   <!-- Main App -->
   <script src="app.js"></script>
   <script src="components/main.js"></script>
   <script src="components/landing.js"></script>
-  <script src="components/polls.js"></script>
+  <script src="components/mc-poll.js"></script>
+  <script src="components/geo-poll.js"></script>
   <script src="components/graph-bar.js"></script>
+  <script src="components/graph-map.js"></script>
+  <script src="components/share-poll.js"></script>
   <script src="components/not-found.js"></script>
 
 </body>

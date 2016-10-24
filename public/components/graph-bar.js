@@ -5,7 +5,7 @@ angular
     template: '<svg class="graph graph-bar"></svg>',
     controller: GraphBarCtrl,
     bindings: {
-      answers: '<',
+      choices: '<',
       showAnswers: '<',
       showCounts: '<'
     }
@@ -36,12 +36,12 @@ function GraphBarCtrl (d3) {
   }
 
   ctrl.$onChanges = function () {
-    if (ctrl.answers && !initialized) {
-      generateChart(ctrl.answers)
-      renderData(ctrl.answers)
+    if (ctrl.choices && !initialized) {
+      generateChart(ctrl.choices)
+      renderData(ctrl.choices)
       initialized = true
     } else {
-      renderData(ctrl.answers)
+      renderData(ctrl.choices)
     }
 
     if (ctrl.showAnswers) {
@@ -74,7 +74,7 @@ function GraphBarCtrl (d3) {
 
     // Define scheme
     var c10 = d3.scaleOrdinal(d3.schemeCategory10)
-    c10.domain(ctrl.answers.map(function (d, i) { return d.text }))
+    c10.domain(ctrl.choices.map(function (d, i) { return d.text }))
 
     // Set height
     var newGraphHeight = (conf.barHeight + conf.padding) * data.length

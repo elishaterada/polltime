@@ -11,7 +11,8 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
 
   var pollDefault = {
     question: '',
-    answers: ['', '']
+    choices: ['', ''],
+    type: 'mc'
   }
 
   ctrl.$onInit = function () {
@@ -29,6 +30,8 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
 
   ctrl.createPoll = function (newPoll) {
     var uid = null
+    var pollData = {}
+    var choices = []
     var answers = []
 
     // Close virtual keyboard
@@ -38,22 +41,30 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
       uid = ctrl.user.uid
     }
 
-    // Build answers format
-    _.each(newPoll.answers, function (value, key) {
-      if (value) {
-        answers.push({
-          text: value,
-          count: 0
-        })
-      }
-    })
-
-    var pollData = {
+    pollData = {
       'ownerID': uid,
       'question': newPoll.question,
-      'answers': answers,
+      'type': newPoll.type,
       'created': moment().format(),
       'modified': moment().format()
+    }
+
+    // Build Multiple-Choices
+    if (newPoll.type === 'mc') {
+      _.each(newPoll.choices, function (value, key) {
+        if (value) {
+          choices.push({
+            text: value,
+            count: 0
+          })
+        }
+      })
+
+      pollData.choices = choices
+    } else if (newPoll.type === 'geo') {
+      pollData.answers = {
+        'ignore': { name: '', location: '' }
+      }
     }
 
     ctrl.polls.$add(pollData)
@@ -70,7 +81,11 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
             .hideDelay(3000)
         )
 
-        $state.go('polls', { id: id })
+        if (pollData.type === 'mc') {
+          $state.go('mcPoll', { id: id })
+        } else if (pollData.type === 'geo') {
+          $state.go('geoPoll', { id: id })
+        }
       })
   }
 
@@ -78,10 +93,10 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
     // Automatically append next answer
     // IF: last item has a value
     // IF: total items are less than equal to 10
-    if (_.last(ctrl.newPoll.answers) !== '' &&
-        ctrl.newPoll.answers.length < 10
+    if (_.last(ctrl.newPoll.choices) !== '' &&
+        ctrl.newPoll.choices.length < 10
     ) {
-      ctrl.newPoll.answers.push('')
+      ctrl.newPoll.choices.push('')
     }
   }
 }

@@ -5,35 +5,35 @@
          layout="row"
          layout-align="center center">
       {{ $ctrl.poll.question }}
-      <md-progress-circular ng-if="!$ctrl.poll.answers"></md-progress-circular>
+      <md-progress-circular ng-if="!$ctrl.poll.choices"></md-progress-circular>
     </div>
 
-    <!-- Vote -->
+    <!-- Answer -->
     <form
       class="mt2"
       layout="column"
       layout-align="center center"
       layout-padding
-      ng-if="!$ctrl.voted"
-      ng-submit="$ctrl.vote($ctrl.choice)"
+      ng-if="$ctrl.poll.type === 'mc' && !$ctrl.answered"
+      ng-submit="$ctrl.answer($ctrl.choice)"
     >
 
       <md-radio-group ng-model="$ctrl.choice">
         <md-radio-button
-          ng-repeat="answer in $ctrl.poll.answers track by $index"
+          ng-repeat="choice in $ctrl.poll.choices track by $index"
           value="{{ $index }}">
-          {{ answer.text }}
+          {{ choice.text }}
         </md-radio-button>
       </md-radio-group>
 
       <md-button ng-if="$ctrl.choice"
                  class="md-raised md-primary"
-                 type="submit">Vote</md-button>
+                 type="submit">Send Answer</md-button>
 
       <md-button ng-if="$ctrl.created"
-                 ng-click="$ctrl.skipVote()"
+                 ng-click="$ctrl.skipAnswer()"
                  class="md-primary"
-                 type="button">Skip Vote</md-button>
+                 type="button">Skip to Results</md-button>
 
     </form>
 
@@ -43,10 +43,12 @@
       layout="column"
       layout-align="center center"
       layout-padding
-      ng-if="$ctrl.voted"
+      ng-if="$ctrl.answered"
     >
+
       <graph-bar
-        answers="$ctrl.poll.answers"
+        ng-if="$ctrl.poll.type === 'mc'"
+        choices="$ctrl.poll.choices"
         show-answers="$ctrl.showAnswers"
         show-counts="$ctrl.showCounts"
       ></graph-bar>
@@ -64,24 +66,7 @@
         </md-switch>
       </div>
 
-      <div class="mt2"
-           layout="row"
-           layout-align="center center">
-
-        <md-input-container>
-          <input
-            id="shortURL"
-            ng-model="$ctrl.shortURL"
-            aria-label="Share URL">
-        </md-input-container>
-
-        <md-button
-          md-no-ink
-          class="md-primary clipboard"
-          data-clipboard-action="copy"
-          data-clipboard-target="#shortURL"
-        >Copy Poll URL</md-button>
-      </div>
+      <share-poll></share-poll>
 
       <md-button class="md-primary md-raised" ng-click="$ctrl.goTo('landing')">Create New Poll</md-button>
 

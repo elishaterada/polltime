@@ -1,4 +1,4 @@
-/* global _ moment d3 firebase */
+/* global _ moment d3 firebase mapboxgl */
 
 angular
   .module('app', [
@@ -15,6 +15,8 @@ angular
   .constant('_', _)
   .constant('moment', moment)
   .constant('d3', d3)
+  .constant('mapboxgl', mapboxgl)
+  .constant('mapboxToken', 'pk.eyJ1IjoiZWxpc2hhdGVyYWRhIiwiYSI6ImNpdW4yeGtycDAwY2IyenBrNDF1bjd2bjIifQ.eEfXTbVcwDhvVlPyPJNUpg')
 
 function config (
   $animateProvider,
@@ -80,9 +82,14 @@ function config (
     })
 
     // Polls
-    .state('polls', {
-      url: '/polls/:id',
-      component: 'polls'
+    .state('mcPoll', {
+      url: '/polls/mc/:id',
+      component: 'mcPoll'
+    })
+
+    .state('geoPoll', {
+      url: '/polls/geo/:id',
+      component: 'geoPoll'
     })
 
     // Not Found

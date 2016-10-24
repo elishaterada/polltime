@@ -21,26 +21,34 @@
         >
       </md-input-container>
 
-      <div ng-if="$ctrl.newPoll.question">
+      <md-radio-group
+        ng-if="$ctrl.newPoll.question"
+        ng-model="$ctrl.newPoll.type"
+      >
+        <md-radio-button value="mc">Multiple Choice</md-radio-button>
+        <md-radio-button value="geo">Geography</md-radio-button>
+      </md-radio-group>
+
+      <div ng-if="$ctrl.newPoll.question && $ctrl.newPoll.type === 'mc'">
         <md-input-container
           class="md-block"
-          ng-repeat="answer in $ctrl.newPoll.answers track by $index"
+          ng-repeat="answer in $ctrl.newPoll.choices track by $index"
         >
           <label>Answer</label>
-          <input ng-model="$ctrl.newPoll.answers[$index]"
+          <input ng-model="$ctrl.newPoll.choices[$index]"
                  type="text"
                  md-maxlength="44"
                  ng-required="$index < 2">
         </md-input-container>
-
-        <md-button ng-if="$ctrl.newPoll.question"
-                   class="md-raised md-primary"
-                   type="submit">Create</md-button>
-
-        <md-button ng-if="$ctrl.newPoll.question"
-                   ng-click="$ctrl.cancel()"
-                   type="button">Cancel</md-button>
       </div>
+
+      <md-button ng-if="$ctrl.newPoll.question"
+                 class="md-raised md-primary"
+                 type="submit">Create</md-button>
+
+      <md-button ng-if="$ctrl.newPoll.question"
+                 ng-click="$ctrl.cancel()"
+                 type="button">Cancel</md-button>
 
     </form>
   </div>
