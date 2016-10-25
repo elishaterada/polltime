@@ -32,7 +32,6 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
     var uid = null
     var pollData = {}
     var choices = []
-    var answers = []
 
     // Close virtual keyboard
     angular.element(document.querySelector('.md-input-focus')).blur()
