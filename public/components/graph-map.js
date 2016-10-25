@@ -45,6 +45,7 @@ function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
 
   function loadMarkers () {
     var bounds = new mapboxgl.LngLatBounds()
+    var markers = []
 
     _.each(ctrl.answers, function (value, key) {
       if (key === 'ignore') {
@@ -53,6 +54,9 @@ function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
 
       // Extend boundary to reset map view later
       bounds.extend(value.location.coordinates)
+
+      // Track answers
+      markers.push(value)
 
       var el = document.createElement('div')
       el.id = key
@@ -63,6 +67,11 @@ function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
         .addTo(map)
     })
 
-    map.fitBounds(bounds, {padding: 100})
+    if (markers.length === 1) {
+      map.setZoom(4)
+      map.setCenter(markers[0].location.coordinates)
+    } else if (markers.length > 1) {
+      map.fitBounds(bounds, { padding: 100 })
+    }
   }
 }
