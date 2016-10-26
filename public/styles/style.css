@@ -101,7 +101,8 @@ a:active  {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   select,
   textarea,
-  input {
+  input,
+  md-autocomplete input:not(.md-input) {
     font-size: 16px;
   }
 }
