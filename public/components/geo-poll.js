@@ -5,7 +5,7 @@ angular
     controller: GeoPollCtrl
   })
 
-function GeoPollCtrl (Auth, $stateParams, $q, $firebaseObject, $mdToast, $localStorage, $state, moment, $http, mapboxToken) {
+function GeoPollCtrl (Auth, $stateParams, $q, $firebaseObject, $firebaseArray, $mdToast, $localStorage, $state, moment, $http, mapboxToken) {
   var ctrl = this
 
   ctrl.$onInit = function () {
@@ -41,23 +41,22 @@ function GeoPollCtrl (Auth, $stateParams, $q, $firebaseObject, $mdToast, $localS
 
   ctrl.answer = function (choice) {
     // Update Poll
-    var geoId = _.replace(choice.id, '.', '_')
-    ctrl.poll.answers[geoId] = {
+    var answer = {
       name: choice.place_name,
       location: choice.geometry
     }
+    var answers = $firebaseArray(
+      firebase.database().ref('polls').child($stateParams.id).child('answers')
+    )
 
-    ctrl.poll.modified = moment().format()
-
-    ctrl.poll.$save().then(function () {
+    answers.$add(answer).then(function (ref) {
+      // Store answered state
       $localStorage[$stateParams.id + '_answered'] = true
       ctrl.answered = $localStorage[$stateParams.id + '_answered']
 
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent('Vote Casted')
-          .hideDelay(3000)
-      )
+      // Update parent poll
+      ctrl.poll.modified = moment().format()
+      ctrl.poll.$save()
     })
   }
 

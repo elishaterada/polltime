@@ -59,10 +59,6 @@ function LandingCtrl (Auth, Profiles, Polls, $firebaseObject, $firebaseArray, $m
       })
 
       pollData.choices = choices
-    } else if (newPoll.type === 'geo') {
-      pollData.answers = {
-        'ignore': { name: '', location: '' }
-      }
     }
 
     ctrl.polls.$add(pollData)

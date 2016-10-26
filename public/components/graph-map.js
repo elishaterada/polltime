@@ -14,9 +14,6 @@ function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
   var intervalID
 
   ctrl.$onInit = function () {
-    ctrl.showAnswers = true
-    ctrl.showCounts = true
-
     mapboxgl.accessToken = mapboxToken
 
     map = new mapboxgl.Map({
@@ -30,13 +27,13 @@ function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
   }
 
   ctrl.$onChanges = function () {
-    if (map && map.loaded()) {
+    if (map && map.loaded() && ctrl.answers) {
       loadMarkers()
     }
   }
 
   function mapInitLoadMarkers () {
-    if (map && map.loaded()) {
+    if (map && map.loaded() && ctrl.answers) {
       loadMarkers()
       $interval.cancel(intervalID)
     }
@@ -44,18 +41,11 @@ function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
 
   function loadMarkers () {
     var bounds = new mapboxgl.LngLatBounds()
-    var markers = []
+    var answersArray = _.values(ctrl.answers)
 
-    _.each(ctrl.answers, function (value, key) {
-      if (key === 'ignore') {
-        return
-      }
-
+    _.each(answersArray, function (value, key) {
       // Extend boundary to reset map view later
       bounds.extend(value.location.coordinates)
-
-      // Track answers
-      markers.push(value)
 
       var el = document.createElement('div')
       el.id = key
@@ -66,10 +56,10 @@ function GraphMapCtrl ($interval, mapboxToken, mapboxgl) {
         .addTo(map)
     })
 
-    if (markers.length === 1) {
+    if (answersArray.length === 1) {
       map.setZoom(4)
-      map.setCenter(markers[0].location.coordinates)
-    } else if (markers.length > 1) {
+      map.setCenter(answersArray[0].location.coordinates)
+    } else if (answersArray.length > 1) {
       map.fitBounds(bounds, { padding: 100 })
     }
   }
