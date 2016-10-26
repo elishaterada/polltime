@@ -1,5 +1,3 @@
-/* global _ moment d3 firebase mapboxgl */
-
 angular
   .module('app', [
     'ngAnimate',

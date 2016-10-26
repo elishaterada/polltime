@@ -1,4 +1,3 @@
-//  Main Component
 angular
   .module('app')
   .component('main', {

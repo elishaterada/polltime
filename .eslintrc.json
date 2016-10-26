@@ -6,6 +6,10 @@
   ],
   "globals": {
     "angular": true,
-    "_": true
+    "_": true,
+    "moment": true,
+    "d3": true,
+    "firebase": true,
+    "mapboxgl": true
   }
 }

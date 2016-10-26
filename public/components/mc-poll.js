@@ -1,4 +1,3 @@
-// Polls Component
 angular
   .module('app')
   .component('mcPoll', {
@@ -6,18 +5,17 @@ angular
     controller: McPollCtrl
   })
 
-function McPollCtrl (Auth, Polls, $stateParams, $firebaseArray, $mdToast, $localStorage, $state, moment) {
+function McPollCtrl (Auth, $stateParams, $firebaseObject, $mdToast, $localStorage, $state, moment) {
   var ctrl = this
 
   ctrl.$onInit = function () {
     Auth.$onAuthStateChanged(function (firebaseuser) {
       ctrl.user = firebaseuser
     })
-    ctrl.polls = $firebaseArray(Polls)
 
-    ctrl.polls.$loaded().then(function (polls) {
-      ctrl.poll = polls.$getRecord($stateParams.id)
-    })
+    ctrl.poll = $firebaseObject(
+      firebase.database().ref('polls').child($stateParams.id)
+    )
 
     ctrl.created = $localStorage[$stateParams.id + '_created']
     ctrl.answered = $localStorage[$stateParams.id + '_answered']
@@ -31,17 +29,16 @@ function McPollCtrl (Auth, Polls, $stateParams, $firebaseArray, $mdToast, $local
     ctrl.poll.choices[choice].count += 1
     ctrl.poll.modified = moment().format()
 
-    ctrl.polls.$save(ctrl.poll)
-      .then(function () {
-        $localStorage[$stateParams.id + '_answered'] = true
-        ctrl.answered = $localStorage[$stateParams.id + '_answered']
+    ctrl.poll.$save().then(function () {
+      $localStorage[$stateParams.id + '_answered'] = true
+      ctrl.answered = $localStorage[$stateParams.id + '_answered']
 
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Vote Casted')
-            .hideDelay(3000)
-        )
-      })
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Vote Casted')
+          .hideDelay(3000)
+      )
+    })
   }
 
   ctrl.skipAnswer = function () {

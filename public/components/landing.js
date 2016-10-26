@@ -1,4 +1,3 @@
-// Landing Component
 angular
   .module('app')
   .component('landing', {

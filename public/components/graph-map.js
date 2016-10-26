@@ -1,4 +1,3 @@
-// Polls Component
 angular
   .module('app')
   .component('graphMap', {

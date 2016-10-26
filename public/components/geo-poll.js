@@ -5,18 +5,17 @@ angular
     controller: GeoPollCtrl
   })
 
-function GeoPollCtrl (Auth, Polls, $stateParams, $q, $firebaseArray, $mdToast, $localStorage, $state, moment, $http, mapboxToken) {
+function GeoPollCtrl (Auth, $stateParams, $q, $firebaseObject, $mdToast, $localStorage, $state, moment, $http, mapboxToken) {
   var ctrl = this
 
   ctrl.$onInit = function () {
     Auth.$onAuthStateChanged(function (firebaseuser) {
       ctrl.user = firebaseuser
     })
-    ctrl.polls = $firebaseArray(Polls)
 
-    ctrl.polls.$loaded().then(function (polls) {
-      ctrl.poll = polls.$getRecord($stateParams.id)
-    })
+    ctrl.poll = $firebaseObject(
+      firebase.database().ref('polls').child($stateParams.id)
+    )
 
     ctrl.searchText = ''
 
@@ -50,17 +49,16 @@ function GeoPollCtrl (Auth, Polls, $stateParams, $q, $firebaseArray, $mdToast, $
 
     ctrl.poll.modified = moment().format()
 
-    ctrl.polls.$save(ctrl.poll)
-      .then(function () {
-        $localStorage[$stateParams.id + '_answered'] = true
-        ctrl.answered = $localStorage[$stateParams.id + '_answered']
+    ctrl.poll.$save().then(function () {
+      $localStorage[$stateParams.id + '_answered'] = true
+      ctrl.answered = $localStorage[$stateParams.id + '_answered']
 
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Vote Casted')
-            .hideDelay(3000)
-        )
-      })
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Vote Casted')
+          .hideDelay(3000)
+      )
+    })
   }
 
   ctrl.skipAnswer = function () {
